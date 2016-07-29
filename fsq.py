@@ -1,6 +1,7 @@
 import argparse
 import requests
 import webbrowser
+from helpers import get_valid_string, get_int_input, check_alnum
 
 ROOT_URL = "https://api.foursquare.com/v2/venues/"
 
@@ -19,74 +20,48 @@ payload = {
     "client_secret": args.client_secret
 }
 
-def get_categories():
+def get_categories(payload):
     print("Fetching all categories ...")
     req  = requests.get(ROOT_URL + "categories", params=payload)
     response = req.json()
     print(response)
 
-def search_venues():
+def search_venues(payload):
 
-    query = input("Please provide a search query: \n")
-    while not all(c.isalpha() or c.isspace() for c in query) or not query:
-        print("This is a required field that should only contain letters and spaces. Try Again.\n")
-        query = input("Please provide a search query: \n")
+    payload['query'] = get_valid_string("1 - Please provide a search query:")
+    payload['near']  = get_valid_string("2 - Please provide a location for the venues")
 
-    location    = input("Please provide a location for the venues\n")
-    while not all(c.isalpha() or c.isspace() or c == "," for c in location) or not location:
-        print("This is a required field that should only contain letters and spaces. Try again\n")
-        location = input("Please provide a location for the venues\n")
+    radius = get_int_input("3 - Please provide a search radius in meters (up to 2000, default is 100 - Leave blank to\
+ continue):", 1, 2000, 100)
+    limit  = get_int_input("4 - How many results do you wish to get back ? (up to 50, default it 10 - Leave blank to\
+ continue):", 1, 50, 10)
+    category_id = check_alnum("5 - Please provide a category id if you have one (Leave blank to continue) \n")
 
-    radius = input("Please provide a search radius in meters (up to 2000, default is 100 - Leave blank to continue): \n")
-    while radius and int(radius) not in range(1, 2001):
-        print("The maximum radius should be 2000")
-        radius = input("Please provide a search radius (max 2000), return to ignore): \n")
-
-    limit  = input("How many results do you wish to get back ? (up to 50, default it 10 - Leave blank to continue): \n")
-    while limit and int(limit) not in range(1, 51):
-        print("The maximum amount of result return cannot exceed 50\n")
-        limit = input("Number of results: \n")
-
-    category_id = input("Please provide a category id if you have one (Leave blank to continue) \n")
-
-    payload['query'] = query
-    payload['near'] = location
-    payload['radius'] = int(radius) if radius else  100
-    payload['limit'] = int(limit) if limit else 10
+    if radius: payload['radius'] = radius
+    if limit: payload['limit'] = limit
     if category_id: payload['category_id'] = category_id
 
     venues_request = requests.get(ROOT_URL + "search", params=payload)
-    print("Fetching results for %s in %s" % (query, location))
+    print("Fetching results for %s in %s" % (payload['query'], payload['near']))
     response = venues_request.json()
     webbrowser.open(venues_request.url)
 
-def get_trending_venues():
-    location = input('Please Provide a location \n')
-    while not all(c.isalpha() or c.isspace() or c == "," for c in location) or not location:
-        print("This is a required field, Please provide a location: \n")
-        location = input("Please provide a location \n")
+def get_trending_venues(payload):
+    payload['near'] = get_valid_string('Please Provide a location')
+    radius = get_int_input('Please provide a search radius (in meters - up to 2000 - default 100) Leave blank to \
+ skip:', 1, 2000, 100)
+    limit = get_int_input('How many search results do you wish to have returned ? (Max is 50 - Default is 10) Leave blank\
+to skip', 1, 50, 10)
 
-    radius = input('Please provide a search radius (in meters - up to 2000 - default 100) Leave blank to skip: \n')
-    while radius and int(radius) not in range(1, 2001):
-        print("The search radius should not exceed 2000 \n")
-        radius = input("Please provide a search radius between 1 and 2000 (Leave blank to skip) \n")
-
-    limit = input('How many search results do you wish to have returned ? (Max is 50 - Default is 10) Leave blank\
-to skip\n')
-    while limit and int(limit) not in range(1, 51):
-        print("We can only return a maximum of 50 results - Please choose a correct number \n")
-        limit = input("How many search results do you wish to have returned ? (Max 50 - Default 10)\n")
-
-    payload['near'] = location
-    payload['radius'] = radius if radius else 100
-    payload['limit'] = limit if limit else 10
+    if radius: payload['radius'] = radius
+    if limit: payload['limit'] = limit
 
     trending_request = requests.get(ROOT_URL + 'trending', params=payload)
     print("Getting trending venues for %s" % (location))
     trending_venues = trending_request.json()
     webbrowser.open(trending_request.url)
 
-def explore_venues():
+def explore_venues(payload):
 
     location = input("Please provide a location\n")
     while not all(c.isalpha() or c.isspace() or c == ',' for c in location) or not location:
@@ -130,13 +105,13 @@ and 4 being the most expensive. Leave blank to skip\n)")
 if __name__ == "__main__":
 
     if args.endpoint == "categories":
-        get_categories()
+        get_categories(payload)
     elif args.endpoint == "search":
-        search_venues()
+        search_venues(payload)
     elif args.endpoint == "trending":
-        get_trending_venues()
+        get_trending_venues(payload)
     elif args.endpoint == "explore":
-        explore_venues()
+        explore_venues(payload)
 
 
 
