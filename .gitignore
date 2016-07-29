@@ -1,0 +1,4 @@
+.DS_*
+*.sw*
+.pyc
+notes.md
