@@ -1,5 +1,5 @@
 def prompt_user(prompt_message):
-    return input(prompt_message)
+    return input(prompt_message + "\n")
 
 def get_string(message):
     user_input = prompt_user(message)
