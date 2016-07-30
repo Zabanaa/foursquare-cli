@@ -1,7 +1,7 @@
 import argparse
 import requests
 import webbrowser
-from helpers import get_valid_string, get_int_input, check_alnum
+from helpers import get_valid_string, get_int_input, check_alnum, check_in_list
 
 ROOT_URL = "https://api.foursquare.com/v2/venues/"
 
@@ -63,39 +63,19 @@ to skip', 1, 50, 10)
 
 def explore_venues(payload):
 
-    location = input("Please provide a location\n")
-    while not all(c.isalpha() or c.isspace() or c == ',' for c in location) or not location:
-        print("This is a required field, please provide a correct location \n")
-        location = input("Please provide a location \n")
+    payload['near'] = get_valid_string("Please provide a location")
+    section = check_in_list("What section do you want us to explore ? (Food, Drinks, Coffee, Shops, Arts, Outdoors \
+Sights, Trending, or Specials) - Leave blank skip", ['food', 'drinks', 'coffee', 'shops', 'arts', 'outdoors', 'sights','trending', 'specials'])
+    query = get_valid_string("What do you want to explore ? Please provide a search query or leave blank to skip")
+    limit = get_int_input("How many results do you wish to have returned (max 50 - default 10) leave blank to skip",\
+ 1, 50, 10)
+    price = check_in_list("Do you want to filter by price range ? Choose between 1 and 4 (1 being the least expensive\
+and 4 being the most expensive. Leave blank to skip)", [1,2,3,4])
 
-    section = input("What section do you want us to explore ? (Food, Drinks, Coffee, Shops, Arts, Outdoors \
-Sights, Trending, or Specials) \n")
-    section_list = ['food', 'drinks', 'coffee', 'shops', 'arts', 'outdoors', 'sights','trending', 'specials']
-    while section and section.lower() not in section_list:
-        print("Incorrect section. Please select one from the list above\n")
-        section = input("What section do you want us to explore ? Leave blank to skip\n")
-
-    query = input("What do you want to explore ? Please provide a search query or leave blank to skip\n")
-    while query and not all(c.isalpha() or c.isspace() for c in query):
-        print("Incorrect query, please provide a valid one\n")
-        query = input("What do you want to explore ?\n")
-
-    limit = input("How many results do you wish to have returned (max 50 - default 10) leave blank to skip\n")
-    while limit and int(limit) not in range(1, 51):
-        print("The maximum number of results is 50. Please provide a number within that range\n")
-        limit = print("How many results do you wish to have returned ? Leave blank to skip\n")
-
-    price = input("Do you want to filter by price range ? Choose between 1 and 4 (1 being the least expensive\
-and 4 being the most expensive. Leave blank to skip\n)")
-    while price and int(price) not in range(1,5):
-        print("Invalid price range\n")
-        price = input("Choose a valid price range\n")
-
-    payload['near'] = location
     if section: payload['section'] = section
     if query: payload['query'] = query
-    if limit: payload['limit'] = int(limit)
-    if price: payload['price'] = int(price)
+    if limit: payload['limit'] = limit
+    if price: payload['price'] = price
 
     explore_request = requests.get(ROOT_URL + 'explore', params=payload)
     print("Exploring places ...")

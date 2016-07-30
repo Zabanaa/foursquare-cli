@@ -1,32 +1,32 @@
-def get_int_input(prompt, min_value=None, max_value=None, default=None):
+import * from input_helpers
 
-    user_input = input(prompt + "\n")
+def get_search_query(required=True):
+    pass
+    # Get string if required is False else get_required_string()
+def get_location():
+    # get required string
+    pass
 
-    while user_input and int(user_input) not in range(min_value, max_value + 1):
-        print("There was a problem")
-        user_input = input(prompt + "\n")
-    int_to_return = user_input if user_input else default
+def get_limit():
+    pass
+    # check_in_range
 
-    return int_to_return
+def get_radius():
+    pass
+    # check in range
 
-def check_alnum(prompt):
+def get_section():
+    pass
+    # check in list = check for strings
 
-    user_input = input(prompt + '\n')
+def get_price_range():
+    pass
+    # check in list = check for ints
 
-    while user_input and not all(c.isalnum() or c.isspace() or c == ',' for c in user_input):
-        print("Please provide a list of correct alpha numeric strings separated by commas - Leave blank\
- to skip")
-        user_input = input(prompt + "\n")
+def get_category_id():
+    pass
+    # get string
 
-    return user_input
-
-def get_valid_string(prompt):
-
-    user_input = input(prompt + "\n")
-
-    while not all(c.isalpha() or c.isspace() or c == "," for c in user_input) or not user_input:
-        print("This is a required field that should only contain letters, spaces and commas. \n")
-        user_input = input(prompt + "\n")
-
-    return user_input
-
+def results_format():
+    input("Do you want to see the results in the console or in the browser")
+    # check the answer and proceed accordingly
