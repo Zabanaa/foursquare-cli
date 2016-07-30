@@ -4,7 +4,7 @@ def prompt_user(prompt_message):
 def get_string(message):
     user_input = prompt_user(message)
     # check if there is a string and if that string is made of only alpha characters or commas
-    while user_input and not all(c.isalpha() or c.isspace() or c == "," for c in user_input):
+    while user_input and not all(c.isalpha() or c.isspace() or c == "," for c in user_input) and user_input == " ":
         print("The value you entered is invalid. It should only contain letters, spaces and commas. Please try again\n")
         user_input = prompt_user(message)
 
@@ -14,7 +14,7 @@ def get_required_string(message):
     # Keep prompting the user if he enters nothing or the value is not a valid string
     user_input = prompt_user(message)
 
-    while not all(c.isalpha() or c.isspace() or c == "," for c in user_input) or not user_input:
+    while not all(c.isalpha() or c.isspace() or c == "," for c in user_input) or user_input == " " or not user_input:
         print("This is a required field that should only contain letters, spaces and commas. Please try again\n")
         user_input = prompt_user(message)
     return user_input
