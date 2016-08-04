@@ -2,21 +2,21 @@ Foursquare API Wrapper
 =======================
 
 The Foursquare API wrapper is a command line tool that allows users to interact with
-Foursquare's API. It can be used to return information about venues or groups of venues,
-namely categories, trending and recommended venues. It is also possible to perform a
-search using keywords as a search query.
+Foursquare's API.
+It can be used to return information about venues or groups of venues,
+(namely categories, trending and recommended venues.)
+It is also possible to perform a search using keywords.
 
-It is my first attempt at creating a python package so it is still under heavy
+This is my first attempt at creating a python package so it is still under heavy
 development. Revisions will be made continually to improve the tool and its efficiency.
 
 If you come across this package and would like to contribute, please feel free to initiate
-a PR, which I will happily accept as I want to learn more about the intricacies of
-creating packages and modules.
+a PR, which I will happily accept as it will help me to learn more about the intricacies of package/module creation.
 
 ----
 
 General Usage
-==
+=============
 
 After installing the package you can call it like so:
 
