@@ -13,8 +13,8 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Licence :: OSI Approved :: MIT Licence',
-        'Programming Language :: Python :: 3.5'
+        'License :: Freely Distributable',
+        'Programming Language :: Python'
     ],
     keywords="Foursquare API web development",
     packages=find_packages(),
