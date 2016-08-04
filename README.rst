@@ -18,17 +18,31 @@ a PR, which I will happily accept as it will help me to learn more about the int
 General Usage
 =============
 
-After installing the package you can call it like so:
+To use the Foursquare API Wrapper, you first have to register an application on
+Foursquare's developers site. You will be given two keys: a client_id and a client_secret.
+You will need those to be able to make calls to the API.
+
+After installing the package you can use it like so:
 
 fsq-wrapper <endpoint> <clientid> <client_secret> 
 
-To get your client_id and client_secret keys you have to create an account on foursquare's
-development platform. You will then be able to access your keys from the dashboard.
+Endpoint (Positional Argument) 
 
-Endpoint: The nature of the request - As of present, you can fetch the categories, make a
-search based on a search query, get trending venues or explore venues.
+The nature of the request. As of present date, 4 types of endpoints are accepted:
+categories, search, trending and explore
 
+Client Id (Positional Argument)
+The client id given to you by foursquare's development platform (can be found in the
+dashboard)
+
+Client Secret (Positional Argument) 
+Same as above
+
+
+Endpoints
+=========
 Categories => Will return all venue categories currently supported by the API
-Search => Let's you make a search for venues based on keywords
+Search => Lets you make a search for venues on the basis of keywords and location
 Trending => Will return a list of trending venues based on the location you provide
 Explore => Will return a list of recommended venues near the provided location
+
