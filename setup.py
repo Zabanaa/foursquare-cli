@@ -18,6 +18,7 @@ setup(
     ],
     keywords="Foursquare API web development",
     packages=find_packages(),
+    install_requires['requests'],
     entry_points={
         'console_scripts': [
             'fsq-wrapper=fsq_wrapper:main'
