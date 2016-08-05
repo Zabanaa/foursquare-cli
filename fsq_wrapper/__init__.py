@@ -4,6 +4,7 @@ import requests
 from api_functions import *
 
 def main():
+    # Just a test comment to see if the version bump using tags actually works
     parser = argparse.ArgumentParser(description="Wrapper around the foursquare API. Use it to retrieve information about\
                                      specific venues or groups of venues.")
     parser.add_argument("endpoint", help="Name of the resource you want to access", choices=["categories", "trending",\

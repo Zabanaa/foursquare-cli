@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
 
     name="fsq_wrapper",
-    version="0.0.2",
+    version="0.0.3",
     description="This is a CLI tool to make calls to the foursquare API",
     url="https://github.com/Zabanaa/foursquare-cli",
     author="Karim Cheurfi (Zabanaa)",
